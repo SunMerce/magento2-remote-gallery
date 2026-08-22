@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="catalog">
+            <group id="sunmerce_remote_gallery" translate="label" type="text" sortOrder="600" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Remote Gallery (Sunmerce)</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Remote Gallery</label>
+                    <comment>Replace product images with remote CDN URLs from the "Remote Gallery" product attribute. Products without remote gallery data fall back to their native media gallery.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="optimization_location" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Optimization Query Location</label>
+                    <comment>Choose how role-specific CDN optimization options are inserted into remote image URLs.</comment>
+                    <source_model>Sunmerce\RemoteGallery\Model\Source\OptimizationLocation</source_model>
+                </field>
+                <field id="thumb_options" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Thumbnail Optimization Options</label>
+                    <comment>Used for gallery control thumbnails. Examples: cdn-cgi/image/width=88,height=110,fit=cover or width=88&amp;height=110.</comment>
+                </field>
+                <field id="image_options" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Main Image Optimization Options</label>
+                    <comment>Used for the main PDP gallery image.</comment>
+                </field>
+                <field id="full_options" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Full Image Optimization Options</label>
+                    <comment>Used for the full-size PDP gallery image.</comment>
+                </field>
+                <field id="listing_options" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Listing Image Optimization Options</label>
+                    <comment>Used for category, search, widget, and related product image blocks.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Block\Product\View\Gallery">
+        <plugin name="sunmerce_remote_gallery_pdp_gallery" type="Sunmerce\RemoteGallery\Plugin\Block\Product\View\GalleryPlugin"/>
+    </type>
+    <type name="Magento\ProductVideo\Block\Product\View\Gallery">
+        <plugin name="sunmerce_remote_gallery_product_video_metadata" type="Sunmerce\RemoteGallery\Plugin\Block\Product\View\GalleryPlugin"/>
+    </type>
+    <type name="Magento\Catalog\Block\Product\ImageFactory">
+        <plugin name="sunmerce_remote_gallery_listing_image" type="Sunmerce\RemoteGallery\Plugin\Block\Product\ImageFactoryPlugin"/>
+    </type>
+    <type name="Magento\ConfigurableProduct\Block\Product\View\Type\Configurable">
+        <plugin name="sunmerce_remote_gallery_configurable_json" type="Sunmerce\RemoteGallery\Plugin\Block\Product\View\Type\ConfigurablePlugin"/>
+    </type>
+    <type name="Magento\Swatches\Helper\Data">
+        <plugin name="sunmerce_remote_gallery_swatch_media" type="Sunmerce\RemoteGallery\Plugin\Swatches\Helper\DataPlugin"/>
+    </type>
+    <type name="Magento\Checkout\Block\Cart\Item\Renderer">
+        <plugin name="sunmerce_remote_gallery_cart_item_thumbnail" type="Sunmerce\RemoteGallery\Plugin\Checkout\CartItemRendererPlugin"/>
+    </type>
+    <type name="Magento\ConfigurableProduct\Block\Cart\Item\Renderer\Configurable">
+        <plugin name="sunmerce_remote_gallery_configurable_cart_item_thumbnail" type="Sunmerce\RemoteGallery\Plugin\Checkout\CartItemRendererPlugin"/>
+    </type>
+    <type name="Magento\GroupedProduct\Block\Cart\Item\Renderer\Grouped">
+        <plugin name="sunmerce_remote_gallery_grouped_cart_item_thumbnail" type="Sunmerce\RemoteGallery\Plugin\Checkout\CartItemRendererPlugin"/>
+    </type>
+</config>
