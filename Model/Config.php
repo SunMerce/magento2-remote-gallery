@@ -5,6 +5,7 @@ namespace Sunmerce\RemoteGallery\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Sunmerce\RemoteGallery\Model\Csp\HostValidator;
 
 /**
  * Remote gallery module configuration
@@ -17,6 +18,7 @@ class Config
     public const XML_PATH_IMAGE_OPTIONS = 'catalog/sunmerce_remote_gallery/image_options';
     public const XML_PATH_FULL_OPTIONS = 'catalog/sunmerce_remote_gallery/full_options';
     public const XML_PATH_LISTING_OPTIONS = 'catalog/sunmerce_remote_gallery/listing_options';
+    public const XML_PATH_CSP_IMG_HOSTS = 'catalog/sunmerce_remote_gallery/csp_img_hosts';
 
     /**
      * @var ScopeConfigInterface
@@ -24,11 +26,18 @@ class Config
     private $scopeConfig;
 
     /**
-     * @param ScopeConfigInterface $scopeConfig
+     * @var HostValidator
      */
-    public function __construct(ScopeConfigInterface $scopeConfig)
+    private $hostValidator;
+
+    /**
+     * @param ScopeConfigInterface $scopeConfig
+     * @param HostValidator $hostValidator
+     */
+    public function __construct(ScopeConfigInterface $scopeConfig, HostValidator $hostValidator)
     {
         $this->scopeConfig = $scopeConfig;
+        $this->hostValidator = $hostValidator;
     }
 
     /**
@@ -86,5 +95,27 @@ class Config
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
+    }
+
+    /**
+     * Get CDN hosts allowed by the Content-Security-Policy img-src directive
+     *
+     * @param int|string|null $storeId
+     * @return string[]
+     */
+    public function getCspImgHosts($storeId = null): array
+    {
+        $value = (string)$this->scopeConfig->getValue(
+            self::XML_PATH_CSP_IMG_HOSTS,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        $hosts = preg_split('/[\s,;]+/', $value, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        $hosts = array_values(array_unique($hosts));
+
+        // Never emit unsafe sources into the CSP header, even if the stored
+        // value bypassed admin validation (e.g. set via CLI or import).
+        return $this->hostValidator->getValid($hosts);
     }
 }

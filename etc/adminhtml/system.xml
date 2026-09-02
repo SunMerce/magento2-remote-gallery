@@ -30,6 +30,11 @@
                     <label>Listing Image Optimization Options</label>
                     <comment>Used for category, search, widget, and related product image blocks.</comment>
                 </field>
+                <field id="csp_img_hosts" translate="label comment" type="textarea" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed CSP Image Hosts</label>
+                    <comment>Hosts added to the Content-Security-Policy img-src directive so remote images are not blocked by the browser. One host per line, e.g. cdn.example.com. Wildcards (*), scheme-only sources (https:, data:), commas, semicolons and whitespace are not allowed. Leave empty if your theme already whitelists your CDN.</comment>
+                    <backend_model>Sunmerce\RemoteGallery\Model\Config\Backend\CspImgHosts</backend_model>
+                </field>
             </group>
         </section>
     </system>

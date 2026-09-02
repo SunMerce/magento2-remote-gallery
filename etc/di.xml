@@ -6,4 +6,11 @@
     <type name="Magento\Checkout\Model\Cart\ImageProvider">
         <plugin name="sunmerce_remote_gallery_checkout_cart_image_provider" type="Sunmerce\RemoteGallery\Plugin\Checkout\CartImageProviderPlugin"/>
     </type>
+    <type name="Magento\Csp\Model\CompositePolicyCollector">
+        <arguments>
+            <argument name="collectors" xsi:type="array">
+                <item name="sunmerce_remote_gallery_img_src" xsi:type="object">Sunmerce\RemoteGallery\Model\Csp\ImgSrcCollector</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Sunmerce\RemoteGallery\Test\Unit\Model;
 
 use Sunmerce\RemoteGallery\Model\Config;
+use Sunmerce\RemoteGallery\Model\Csp\HostValidator;
 use Sunmerce\RemoteGallery\Model\UrlTransformer;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
@@ -25,7 +26,7 @@ class ConfigTest extends TestCase
     protected function setUp(): void
     {
         $this->scopeConfig = $this->createMock(ScopeConfigInterface::class);
-        $this->config = new Config($this->scopeConfig);
+        $this->config = new Config($this->scopeConfig, new HostValidator());
     }
 
     public function testIsEnabledReadsStoreScopedFlag(): void
@@ -69,5 +70,38 @@ class ConfigTest extends TestCase
             ->method('getValue');
 
         $this->assertSame('', $this->config->getOptimizationOptions('unknown'));
+    }
+
+    public function testGetCspImgHostsSplitsTrimsAndDeduplicates(): void
+    {
+        $this->scopeConfig->expects($this->once())
+            ->method('getValue')
+            ->with(Config::XML_PATH_CSP_IMG_HOSTS, ScopeInterface::SCOPE_STORE, null)
+            ->willReturn("cdn.example.com\nimg.example.com, cdn.example.com\n\n");
+
+        $this->assertSame(['cdn.example.com', 'img.example.com'], $this->config->getCspImgHosts());
+    }
+
+    public function testGetCspImgHostsReturnsEmptyArrayWhenNotConfigured(): void
+    {
+        $this->scopeConfig->expects($this->once())
+            ->method('getValue')
+            ->with(Config::XML_PATH_CSP_IMG_HOSTS, ScopeInterface::SCOPE_STORE, null)
+            ->willReturn(null);
+
+        $this->assertSame([], $this->config->getCspImgHosts());
+    }
+
+    public function testGetCspImgHostsFiltersUnsafeEntries(): void
+    {
+        $this->scopeConfig->expects($this->once())
+            ->method('getValue')
+            ->with(Config::XML_PATH_CSP_IMG_HOSTS, ScopeInterface::SCOPE_STORE, null)
+            ->willReturn("cdn.example.com\n*\n*.example.com\nhttps:\ndata:\ncdn.example.com:443");
+
+        $this->assertSame(
+            ['cdn.example.com', 'cdn.example.com:443'],
+            $this->config->getCspImgHosts()
+        );
     }
 }

@@ -3,12 +3,13 @@
     <default>
         <catalog>
             <sunmerce_remote_gallery>
-                <enabled>0</enabled>
+                <enabled>1</enabled>
                 <optimization_location>append_query</optimization_location>
                 <thumb_options/>
                 <image_options/>
                 <full_options/>
                 <listing_options/>
+                <csp_img_hosts/>
             </sunmerce_remote_gallery>
         </catalog>
     </default>
