@@ -8,6 +8,7 @@ use Sunmerce\RemoteGallery\Model\Csp\HostValidator;
 use Sunmerce\RemoteGallery\Model\UrlTransformer;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -42,8 +43,8 @@ class ConfigTest extends TestCase
     /**
      * @param string $role
      * @param string $path
-     * @dataProvider optimizationOptionsDataProvider
      */
+    #[DataProvider('optimizationOptionsDataProvider')]
     public function testGetOptimizationOptionsReadsPathForRole(string $role, string $path): void
     {
         $this->scopeConfig->expects($this->once())

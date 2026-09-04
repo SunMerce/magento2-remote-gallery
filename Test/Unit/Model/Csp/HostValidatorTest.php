@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Sunmerce\RemoteGallery\Test\Unit\Model\Csp;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sunmerce\RemoteGallery\Model\Csp\HostValidator;
 
@@ -20,8 +21,8 @@ class HostValidatorTest extends TestCase
 
     /**
      * @param string $host
-     * @dataProvider validHostDataProvider
      */
+    #[DataProvider('validHostDataProvider')]
     public function testValidHostsAreAccepted(string $host): void
     {
         $this->assertTrue($this->validator->isValid($host));
@@ -40,8 +41,8 @@ class HostValidatorTest extends TestCase
 
     /**
      * @param string $host
-     * @dataProvider invalidHostDataProvider
      */
+    #[DataProvider('invalidHostDataProvider')]
     public function testUnsafeHostsAreRejected(string $host): void
     {
         $this->assertFalse($this->validator->isValid($host));
