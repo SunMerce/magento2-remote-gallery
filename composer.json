@@ -3,7 +3,7 @@
     "description": "Displays remote CDN image URLs instead of the native product media gallery for easier image syndication between servers",
     "type": "magento2-module",
     "license": "proprietary",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "require": {
         "magento/framework": ">=103.0.8",
         "magento/module-catalog": ">=104.0.8",
